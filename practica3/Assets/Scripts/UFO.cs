@@ -15,6 +15,8 @@ public class Premio_boost : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position.y +=5;
+        waitforseconds(0,5);
+        transform.position.y -=5;        
     }
 }

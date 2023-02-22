@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class puntitos : MonoBehaviour
 {
-    public float velocidad;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +15,7 @@ public class puntitos : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(vector3.up, Time.deltaTime * velocidad);
+        transform.Rotate(vector3.right, Time.deltaTime * 50);
     }
 
     void OnDestroy()
