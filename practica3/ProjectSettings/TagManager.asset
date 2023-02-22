@@ -6,6 +6,7 @@ TagManager:
   tags:
   - butonStart
   - suelo
+  - jugador
   layers:
   - Default
   - TransparentFX
