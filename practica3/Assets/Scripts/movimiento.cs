@@ -9,14 +9,11 @@ public class movimiento : MonoBehaviour
     public Camera cam;
     public int velocidad;
     public GameObject prefabSuelo;
-    public Rigidbody rigBod;
-
 
     private Vector3 offset;
     private float ubiX;
     private float ubiZ;
-    private GameObject[] vectSuelos = new GameObject[10];
-    private int posVector = 0;
+    private Rigidbody rigBod;
 
     private float tiempo = 0;
 
@@ -27,9 +24,10 @@ public class movimiento : MonoBehaviour
     {
         offset = cam.transform.position;
        
-
         ubiX = 0.0f;
         ubiZ = 0.0f;
+
+        rigBod = GetComponent<Rigidbody>();
 
         sueloInicial();
     }
@@ -40,8 +38,6 @@ public class movimiento : MonoBehaviour
         {
             ubiZ += 6.0f;
             GameObject elSuelo = Instantiate(prefabSuelo, new Vector3(ubiX, 0, ubiZ), Quaternion.identity) as GameObject;
-            vectSuelos[posVector%10] = elSuelo;
-            posVector++;
         }
     }
 
@@ -68,15 +64,25 @@ public class movimiento : MonoBehaviour
         
     }
 
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.transform.tag == "suelo")
+        {
+            StartCoroutine(creaSuelo(other));
+        }
+    }
+
     IEnumerator creaSuelo(Collision col)
     {
+        Debug.Log("cae");
+
         yield return new WaitForSeconds(0.5f);
 
         col.rigidbody.isKinematic = false;
         col.rigidbody.useGravity = true;
 
         yield return new WaitForSeconds(0.5f);
-        Destroy(col.gameObject);
+        //Destroy(col.gameObject);
 
         float ran = UnityEngine.Random.Range(0f, 1f);
 
@@ -88,13 +94,5 @@ public class movimiento : MonoBehaviour
 
         GameObject elSuelo = Instantiate(prefabSuelo, new Vector3(ubiX, 0, ubiZ), Quaternion.identity) as GameObject;
 
-    }
-
-    private void OnCollisionExit(Collision other)
-    {
-        if (other.transform.tag == "suelo")
-        {
-            StartCoroutine(creaSuelo(other));
-        }
     }
 }
