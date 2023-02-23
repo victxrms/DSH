@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Premio_boost : MonoBehaviour
 {
+    GameObject powerup;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +17,8 @@ public class Premio_boost : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position.y +=5;
-        waitforseconds(0,5);
-        transform.position.y -=5;        
+        powerup.transform.position = new Vector3(powerup.transform.position.x, powerup.transform.position.y + 5, powerup.transform.position.z);
+        new WaitForSeconds(0.5f);
+        powerup.transform.position = new Vector3(powerup.transform.position.x, powerup.transform.position.y - 5, powerup.transform.position.z);
     }
 }

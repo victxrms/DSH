@@ -15,7 +15,7 @@ public class puntitos : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(vector3.right, Time.deltaTime * 50);
+        transform.Rotate(Vector3.right, Time.deltaTime * 50);
     }
 
     void OnDestroy()

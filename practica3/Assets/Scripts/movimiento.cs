@@ -17,7 +17,6 @@ public class movimiento : MonoBehaviour
     private float ubiZ;
     private GameObject[] vectSuelos = new GameObject[10];
     private int posVector = 0;
-    private int tempSegundos = 0;
 
     private float tiempo = 0;
 
@@ -49,10 +48,7 @@ public class movimiento : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float movHorizontal = Input.GetAxis("Horizontal");
-        float movVertical = Input.GetAxis("Vertical");
-
-
+       
         if (Input.GetKeyUp(KeyCode.Space))
         {
             if (posActual == Vector3.forward)
