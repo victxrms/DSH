@@ -9,6 +9,8 @@ public class movimiento : MonoBehaviour
     public Camera cam;
     public int velocidad;
     public GameObject prefabSuelo;
+    public GameObject prefabVallaCemento;
+    public GameObject prefabVallaMadera;
 
     private Vector3 offset;
     private float ubiX;
@@ -19,6 +21,8 @@ public class movimiento : MonoBehaviour
 
     private Vector3 posActual;
 
+    private System.Random rnd = new System.Random();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +31,9 @@ public class movimiento : MonoBehaviour
         ubiX = 0.0f;
         ubiZ = 0.0f;
 
+        GameObject paterPutativus = new GameObject("Objeto vacio");
+        GameObject elSuelo = Instantiate(prefabSuelo, new Vector3(ubiX, 0, ubiZ), Quaternion.Euler(0f, 90f * rnd.Next(1, 2), 0f), paterPutativus.transform) as GameObject;
+
         rigBod = GetComponent<Rigidbody>();
 
         sueloInicial();
@@ -34,10 +41,13 @@ public class movimiento : MonoBehaviour
 
     void sueloInicial()
     {
+
+
         for (int n = 0; n < 3; n++)
         {
+            GameObject paterPutativus = new GameObject("Objeto vacio");
             ubiZ += 6.0f;
-            GameObject elSuelo = Instantiate(prefabSuelo, new Vector3(ubiX, 0, ubiZ), Quaternion.identity) as GameObject;
+            GameObject elSuelo = Instantiate(prefabSuelo, new Vector3(ubiX, 0, ubiZ), Quaternion.Euler(0f, 90f * rnd.Next(1, 2), 0f), paterPutativus.transform) as GameObject;
         }
     }
 
@@ -45,16 +55,19 @@ public class movimiento : MonoBehaviour
     void Update()
     {
        
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            if (posActual == Vector3.forward)
-            {
-                posActual = Vector3.right;
-            }
-            else
-            {
-                posActual = Vector3.forward;
-            }
+            posActual = Vector3.right + Vector3.forward;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            posActual = Vector3.left + Vector3.forward;
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            posActual = Vector3.back;
         }
 
         tiempo = velocidad * Time.deltaTime;
@@ -76,13 +89,17 @@ public class movimiento : MonoBehaviour
     {
         Debug.Log("cae");
 
+        GameObject paterPutativus = new GameObject("Objeto vacio");
+
+        GameObject obstaculo1;
+
         yield return new WaitForSeconds(0.5f);
 
         col.rigidbody.isKinematic = false;
         col.rigidbody.useGravity = true;
 
         yield return new WaitForSeconds(0.5f);
-        //Destroy(col.gameObject);
+        Destroy(col.gameObject.transform.parent.gameObject);
 
         float ran = UnityEngine.Random.Range(0f, 1f);
 
@@ -92,7 +109,10 @@ public class movimiento : MonoBehaviour
         }
         else ubiZ += 6.0f;
 
-        GameObject elSuelo = Instantiate(prefabSuelo, new Vector3(ubiX, 0, ubiZ), Quaternion.identity) as GameObject;
+        GameObject elSuelo = Instantiate(prefabSuelo, new Vector3(ubiX, 0, ubiZ), Quaternion.Euler(0f, 90f * rnd.Next(1, 2), 0f), paterPutativus.transform) as GameObject;
+
+        obstaculo1 = Instantiate(prefabVallaCemento, new Vector3(((UnityEngine.Random.Range(ubiX - 3, ubiX + 3 + 1))), 1, (UnityEngine.Random.Range(ubiZ - 3, ubiZ + 3 + 1))), Quaternion.Euler(0f, 90f * rnd.Next(1, 3), 0f), paterPutativus.transform) as GameObject;
+        
 
     }
 }
