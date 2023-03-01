@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.AnimatedValues;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class movimiento : MonoBehaviour
 {
     public Camera cam;
     public int velocidad;
     public GameObject prefabSuelo;
-    public GameObject prefabVallaCemento;
-    public GameObject prefabVallaMadera;
-
+    public GameObject prefabValla;
+    public Text texto;
+    
     private Vector3 offset;
     private float ubiX;
     private float ubiZ;
@@ -22,6 +25,8 @@ public class movimiento : MonoBehaviour
     private Vector3 posActual;
 
     private System.Random rnd = new System.Random();
+
+    private float tempNivel = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -74,7 +79,15 @@ public class movimiento : MonoBehaviour
 
         rigBod.transform.Translate(posActual * tiempo);
         cam.transform.position = this.transform.position + offset;
-        
+
+        tempNivel += Time.deltaTime;
+
+        texto.text = "Tiempo: " + Mathf.Round(tempNivel);
+
+        if (tempNivel == 10f)
+        {Debug.Log("tiempo superado");  tempNivel = 0; SceneManager.LoadScene("escena2.0", LoadSceneMode.Single); }
+
+
     }
 
     private void OnCollisionExit(Collision other)
@@ -99,7 +112,6 @@ public class movimiento : MonoBehaviour
         col.rigidbody.useGravity = true;
 
         yield return new WaitForSeconds(0.5f);
-        Destroy(col.gameObject.transform.parent.gameObject);
 
         float ran = UnityEngine.Random.Range(0f, 1f);
 
@@ -111,8 +123,8 @@ public class movimiento : MonoBehaviour
 
         GameObject elSuelo = Instantiate(prefabSuelo, new Vector3(ubiX, 0, ubiZ), Quaternion.Euler(0f, 90f * rnd.Next(1, 2), 0f), paterPutativus.transform) as GameObject;
 
-        obstaculo1 = Instantiate(prefabVallaCemento, new Vector3(((UnityEngine.Random.Range(ubiX - 3, ubiX + 3 + 1))), 1, (UnityEngine.Random.Range(ubiZ - 3, ubiZ + 3 + 1))), Quaternion.Euler(0f, 90f * rnd.Next(1, 3), 0f), paterPutativus.transform) as GameObject;
-        
+        obstaculo1 = Instantiate(prefabValla, new Vector3(((UnityEngine.Random.Range(ubiX - 3, ubiX + 3 + 1))), 1, (UnityEngine.Random.Range(ubiZ - 3, ubiZ + 3 + 1))), Quaternion.Euler(0f, 90f * rnd.Next(1, 3), 0f), paterPutativus.transform) as GameObject;
 
+        Destroy(paterPutativus, 15f) ;
     }
 }

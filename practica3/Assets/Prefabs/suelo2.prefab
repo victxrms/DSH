@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3589233727493685941}
   - component: {fileID: 5816616630909728791}
   m_Layer: 0
-  m_Name: suelo
+  m_Name: suelo2
   m_TagString: suelo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f309d3ddfe0234d3d9fe0a6de2486962, type: 2}
+  - {fileID: 2100000, guid: e95cae0268e4847a69b5d33c38f62fe7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
