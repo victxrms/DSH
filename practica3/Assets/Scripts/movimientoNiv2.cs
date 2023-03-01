@@ -150,4 +150,10 @@ public class movimientoNiv2 : MonoBehaviour
 
         Destroy(paterPutativus, 25f) ;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Destroy(other.gameObject);
+        puntuacion++;
+    }   
 }
