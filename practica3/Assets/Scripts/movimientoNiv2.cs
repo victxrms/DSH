@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public class movimiento : MonoBehaviour
+public class movimientoNiv2 : MonoBehaviour
 {
     public Camera cam;
     public int velocidad;
@@ -89,19 +89,18 @@ public class movimiento : MonoBehaviour
         texto.text = "Puntuación: " + Mathf.Round(puntuacion);
 
         if (puntuacion == puntosMax)
-        {Debug.Log("tiempo superado"); StartCoroutine(cambiaEscena()); texto.gameObject.SetActive(false); }
+        {Debug.Log("tiempo superado"); StartCoroutine(final()); texto.gameObject.SetActive(false); }
 
 
     }
 
-    IEnumerator cambiaEscena()
+    IEnumerator final()
     {
-        textoVictoria.text = "¡Enhorabuena!";
+        textoVictoria.text = "¡Has finalizado el juego!";
         textoVictoria.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
         posActual = Vector3.zero;
         puntuacion = 0;
-        SceneManager.LoadScene("escena2.0", LoadSceneMode.Single);
     }
 
     private void OnCollisionExit(Collision other)
